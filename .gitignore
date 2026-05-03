@@ -33,14 +33,17 @@ Thumbs.db
 
 # Data caches (keep folder skeleton, ignore contents)
 data/*
+
+# Keep directory structure
 !data/.gitkeep
 
-# Models (commit small ones explicitly if needed)
+
+# ── Models (large binary files) ────────────────────────────────────────
 models/*.pkl
 models/*.joblib
 !models/.gitkeep
 
-# Outputs (regenerable)
+# ── Outputs (regenerated on each run) ──────────────────────────────────
 outputs/*.png
 outputs/*.csv
 !outputs/.gitkeep
@@ -56,3 +59,9 @@ notebook_part*.pkl
 
 # Github
 .github\workflows\ci.yml
+
+# ── Logs & databases ───────────────────────────────────────────────────
+*.log
+logs/
+mlruns/
+*.db
