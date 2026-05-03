@@ -1,0 +1,60 @@
+name: smoke-test-notebook
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install system deps for CVXPY
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglpk-dev
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m ipykernel install --user --name python3
+
+      - name: Force USE_NEMOSIS=False (CI is offline w.r.t. AEMO)
+        run: |
+          python - <<'PY'
+          import nbformat
+          nb = nbformat.read('VPP_Aggregation_Dispatch.ipynb', as_version=4)
+          for c in nb.cells:
+              if c.cell_type == 'code' and 'USE_NEMOSIS' in c.source:
+                  c.source = c.source.replace('USE_NEMOSIS    = True',
+                                              'USE_NEMOSIS    = False')
+          nbformat.write(nb, 'VPP_Aggregation_Dispatch.ipynb')
+          PY
+
+      - name: Execute notebook
+        run: |
+          jupyter nbconvert --to notebook --execute \
+            VPP_Aggregation_Dispatch.ipynb \
+            --output VPP_smoke.ipynb \
+            --ExecutePreprocessor.timeout=1500
+
+      - name: Upload smoke artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-outputs
+          path: |
+            VPP_smoke.ipynb
+            outputs/

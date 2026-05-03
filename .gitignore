@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+.ipynb_checkpoints/
+
+# ── Jupyter ────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*_executed.ipynb
+
+# ── Environments ───────────────────────────────────────────────────────
+.env
+.venv
+venv/
+env/
+.conda/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Data caches (keep folder skeleton, ignore contents)
+data/*
+!data/.gitkeep
+
+# Models (commit small ones explicitly if needed)
+models/*.pkl
+models/*.joblib
+!models/.gitkeep
+
+# Outputs (regenerable)
+outputs/*.png
+outputs/*.csv
+!outputs/.gitkeep
+
+# Smoke-test artifacts
+VPP_smoke.ipynb
+build_*.py
+cells_p*.pkl
+notebook_part*.pkl
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Github
+.github\workflows\ci.yml
