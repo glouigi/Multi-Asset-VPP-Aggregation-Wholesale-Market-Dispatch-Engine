@@ -255,6 +255,3 @@ After running the notebook, `outputs/` contains:
 XGBoost ≥ 2.0, LightGBM ≥ 4.1, Optuna, SHAP, CVXPY, NEMOSIS, Streamlit, Plotly, Matplotlib, scikit-learn.
  
 ---
-#   M u l t i - A s s e t - V P P - A g g r e g a t i o n - W h o l e s a l e - M a r k e t - D i s p a t c h - E n g i n e 
- 
- 
